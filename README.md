@@ -128,3 +128,10 @@ export default function HomePage() {
 
 export default enhance(MyDocument);
 ```
+
+## Configuration
+
+The `withFork` accepts a config object as a parameter:
+
+- `unit` : unit called on the server to set the initial state
+- `debug` (optional, boolean) : enable debug logging
