@@ -16,6 +16,8 @@ yarn add effector-next
 
 **effector-next** requires `effector, effector-react` to be installed
 
+**@effector/babel-plugin** is necessary if you do not want to manually name the units
+
 ## Usage
 
 1. To load the initial state on the server, you must attach `withFork` wrapper to your `_document` component
@@ -24,19 +26,14 @@ yarn add effector-next
        <summary>pages/_document.jsx</summary>
 
    ```jsx
-   import React from "react";
+   import Document from "next/document";
    import { withFork } from "effector-next";
-   import App from "next/app";
 
    import { serverStarted } from "../model";
 
-   const enhance = withFork({ unit: serverStarted });
+   const enhance = withFork({ debug: false, unit: serverStarted });
 
-   class MyDocument extends Document {
-     // some override if needed
-   }
-
-   export default enhance(MyDocument);
+   export default enhance(Document);
    ```
 
    </details>
@@ -47,17 +44,12 @@ yarn add effector-next
        <summary>pages/_app.jsx</summary>
 
    ```jsx
-   import React from "react";
    import { withHydrate } from "effector-next";
    import App from "next/app";
 
    const enhance = withHydrate();
 
-   function MyApp({ Component, pageProps }) {
-     return <Component {...pageProps} />;
-   }
-
-   export default enhance(MyApp);
+   export default enhance(App);
    ```
 
    </details>
@@ -100,7 +92,7 @@ const effect = createEffect({
 
 export const $data = createStore(null);
 
-$data.on(effect.done, (_, payload) => payload);
+$data.on(effect.done, (_, { result }) => result);
 
 forward({
   from: serverStarted,
