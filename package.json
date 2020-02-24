@@ -1,0 +1,91 @@
+{
+  "name": "effector-next",
+  "version": "0.0.1",
+  "sideEffects": false,
+  "main": "dist/index.js",
+  "module": "dist/index.es.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "tools",
+    "dist"
+  ],
+  "scripts": {
+    "test": "run-s test:*",
+    "test:types": "tsc --noEmit",
+    "test:lint": "eslint . --ext .js,.ts,.tsx",
+    "build": "run-p build:*",
+    "build:module": "rollup -c",
+    "build:declarations": "tsc --emitDeclarationOnly && api-extractor run",
+    "prebuild": "rimraf dist",
+    "prepublish": "npm run build",
+    "postbuild": "rimraf dist/types",
+    "release": "standard-version"
+  },
+  "license": "MIT",
+  "author": "weyheyhey <iweyheyhey@gmail.com>",
+  "repository": "github:weyheyhey/effector-next",
+  "keywords": [
+    "effector",
+    "react",
+    "next"
+  ],
+  "peerDependencies": {
+    "next": "^9.0.0",
+    "react": "^16.6.0",
+    "effector": "^20.12.0",
+    "effector-react": "^20.6.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
+    "@babel/plugin-proposal-optional-chaining": "^7.8.3",
+    "@babel/preset-env": "^7.8.4",
+    "@babel/preset-typescript": "^7.8.3",
+    "@commitlint/cli": "^8.3.5",
+    "@microsoft/api-extractor": "^7.7.8",
+    "@rollup/plugin-commonjs": "^11.0.2",
+    "@rollup/plugin-node-resolve": "^7.1.1",
+    "@types/react": "^16.9.22",
+    "@types/react-dom": "^16.9.5",
+    "@wowvendor/commitlint-config": "^1.0.1",
+    "@wowvendor/eslint-config-base": "^2.0.0",
+    "@wowvendor/eslint-config-react": "^3.0.0",
+    "@wowvendor/eslint-config-typescript": "^2.0.0",
+    "cz-customizable": "^6.2.0",
+    "effector": "^20.12.0",
+    "effector-react": "^20.6.0",
+    "eslint": "^6.8.0",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.7",
+    "next": "^9.2.2",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.19.1",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0",
+    "rimraf": "^3.0.2",
+    "rollup": "^1.31.1",
+    "rollup-plugin-babel": "^4.3.3",
+    "standard-version": "^7.1.0",
+    "typescript": "^3.8.2"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/cz-customizable"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS",
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "prettier --write",
+      "eslint --fix"
+    ],
+    "*.{md,json}": [
+      "prettier --write"
+    ]
+  }
+}
