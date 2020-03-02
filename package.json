@@ -29,6 +29,9 @@
     "react",
     "next"
   ],
+  "dependencies": {
+    "next-cookies": "^2.0.3"
+  },
   "peerDependencies": {
     "next": "^9.0.0",
     "react": "^16.6.0",

@@ -2,6 +2,7 @@ import * as React from "react";
 import Document, { DocumentContext, DocumentProps } from "next/document";
 import { allSettled, fork, serialize } from "effector/fork";
 import { ParsedUrlQuery } from "querystring";
+import cookies from "next-cookies";
 import { Unit } from "effector";
 
 import { domain } from "./domain";
@@ -20,7 +21,8 @@ interface WrappedDocumentProps extends DocumentProps {
   __NEXT_DATA__: ExtendedNextData;
 }
 
-export interface ServerPayload {
+export interface ServerPayload<C extends Object = {}> {
+  cookies: C;
   pathname: string;
   query: ParsedUrlQuery;
 }
@@ -51,7 +53,14 @@ export function withFork({ unit, debug }: WithForkConfig) {
 
         if (debug) console.time("2.All units settled");
 
-        await allSettled<ServerPayload>(unit, { scope, params: { pathname: ctx.pathname, query: ctx.query } });
+        await allSettled<ServerPayload>(unit, {
+          scope,
+          params: {
+            query: ctx.query,
+            cookies: cookies(ctx),
+            pathname: ctx.pathname,
+          },
+        });
 
         if (debug) console.timeEnd("2.All units settled");
 
