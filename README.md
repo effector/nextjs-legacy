@@ -133,5 +133,6 @@ The `withFork` accepts a config object as a parameter:
 When the unit passed to `withFork` is called, the object will be passed as a payload:
 
 - `cookies` : parsed cookies
+- `headers` : request headers
 - `pathname` : path section of `URL`
 - `query` : query string section of `URL` parsed as an object.
