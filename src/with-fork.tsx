@@ -2,6 +2,7 @@ import * as React from "react";
 import Document, { DocumentContext, DocumentProps } from "next/document";
 import { allSettled, fork, serialize } from "effector/fork";
 import { ParsedUrlQuery } from "querystring";
+import { IncomingHttpHeaders } from "http";
 import cookies from "next-cookies";
 import { Unit } from "effector";
 
@@ -25,6 +26,7 @@ export interface ServerPayload<C extends Object = {}> {
   cookies: C;
   pathname: string;
   query: ParsedUrlQuery;
+  headers: IncomingHttpHeaders;
 }
 
 export interface WithForkConfig {
@@ -59,6 +61,7 @@ export function withFork({ unit, debug }: WithForkConfig) {
             query: ctx.query,
             cookies: cookies(ctx),
             pathname: ctx.pathname,
+            headers: ctx.req?.headers!,
           },
         });
 
