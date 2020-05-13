@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.0](https://github.com/weyheyhey/effector-next/compare/v0.2.0...v1.0.0-alpha.0) (2020-05-13)
+
+### Features
+
+- replace serverStarted event to with-start helper ([f5ec4f1](https://github.com/weyheyhey/effector-next/commit/f5ec4f1cb24a51f9bc946ba29ea6aa56db4e4637))
+
 ## [0.2.0](https://github.com/weyheyhey/effector-next/compare/v0.1.0...v0.2.0) (2020-03-10)
 
 ### Features
