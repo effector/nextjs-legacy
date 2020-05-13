@@ -9,7 +9,7 @@ module.exports = function withEffectoReactAliases() {
 
   const originalResolveFilename = Module._resolveFilename;
 
-  Module._resolveFilename = function(request, parentModule, isMain, options) {
+  Module._resolveFilename = function (request, parentModule, isMain, options) {
     if (request === target) {
       return originalResolveFilename.call(this, alias, parentModule, isMain, options);
     }

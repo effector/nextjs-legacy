@@ -17,16 +17,6 @@ export function withHydrate() {
 
   return (App: NextComponentType<AppContext>) =>
     class WithEffectorHydrate extends React.Component<AppProps> {
-      static async getInitialProps(appCtx: AppContext) {
-        let pageProps = {};
-
-        if (App.getInitialProps) {
-          pageProps = await App.getInitialProps(appCtx);
-        }
-
-        return { pageProps };
-      }
-
       constructor(props: AppProps) {
         super(props);
 

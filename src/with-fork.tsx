@@ -1,13 +1,11 @@
 import * as React from "react";
 import Document, { DocumentContext, DocumentProps } from "next/document";
-import { allSettled, fork, serialize } from "effector/fork";
-import { ParsedUrlQuery } from "querystring";
-import { IncomingHttpHeaders } from "http";
+import { fork, serialize, allSettled } from "effector/fork";
 import cookies from "next-cookies";
-import { Unit } from "effector";
 
 import { domain } from "./domain";
-import { renderPageWithScope, INITIAL_STATE_KEY } from "./lib";
+import { PageContext } from "./types";
+import { getStartUnits, renderPageWithScope, INITIAL_STATE_KEY } from "./lib";
 
 /* eslint-disable no-console, complexity */
 
@@ -22,19 +20,11 @@ interface WrappedDocumentProps extends DocumentProps {
   __NEXT_DATA__: ExtendedNextData;
 }
 
-export interface ServerPayload<C extends Object = {}> {
-  cookies: C;
-  pathname: string;
-  query: ParsedUrlQuery;
-  headers: IncomingHttpHeaders;
-}
-
 export interface WithForkConfig {
   debug?: boolean;
-  unit: Unit<ServerPayload>;
 }
 
-export function withFork({ unit, debug }: WithForkConfig) {
+export function withFork({ debug }: WithForkConfig = {}) {
   return (Component: DocumentType): DocumentType =>
     class WrappedDocument extends React.Component<WrappedDocumentProps> {
       static renderDocument = Component.renderDocument;
@@ -44,6 +34,7 @@ export function withFork({ unit, debug }: WithForkConfig) {
 
       static async getInitialProps(ctx: DocumentContext) {
         const originalRenderPage = ctx.renderPage;
+        const startUnits = getStartUnits(originalRenderPage);
 
         if (debug) console.time("1.Domain forked");
 
@@ -55,27 +46,34 @@ export function withFork({ unit, debug }: WithForkConfig) {
 
         if (debug) console.time("2.All units settled");
 
-        await allSettled<ServerPayload>(unit, {
-          scope,
-          params: {
-            query: ctx.query,
-            cookies: cookies(ctx),
-            pathname: ctx.pathname,
-            headers: ctx.req?.headers!,
-          },
-        });
+        if (startUnits.length > 0) {
+          await Promise.all(
+            startUnits.map((unit) =>
+              allSettled<PageContext>(unit, {
+                scope,
+                params: {
+                  req: ctx.req!,
+                  res: ctx.res!,
+                  query: ctx.query,
+                  cookies: cookies(ctx),
+                  pathname: ctx.pathname,
+                },
+              }),
+            ),
+          );
+        }
 
         if (debug) console.timeEnd("2.All units settled");
 
-        const initialState = serialize(scope);
-
-        if (debug) console.log("3.Received initial state", initialState);
-
-        if (debug) console.time("4.Component.getInitialProps called");
+        if (debug) console.time("3.Document.getInitialProps called");
 
         const initialProps = await Component.getInitialProps(ctx);
 
-        if (debug) console.timeEnd("4.Component.getInitialProps called");
+        if (debug) console.timeEnd("3.Document.getInitialProps called");
+
+        const initialState = serialize(scope);
+
+        if (debug) console.log("4.Received initial state:", initialState);
 
         return {
           ...initialProps,

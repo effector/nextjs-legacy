@@ -1,3 +1,3 @@
 import { createDomain } from "effector";
 
-export const domain = createDomain("next-effector-domain");
+export const domain = createDomain("root");
