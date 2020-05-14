@@ -18,7 +18,7 @@ yarn add effector-next
 
 **effector/babel-plugin** is necessary if you do not want to manually name the units
 
-## Usage
+## Settings
 
 1. To load the initial state on the server, you must attach `withFork` wrapper to your `_document` component
 
@@ -74,7 +74,21 @@ yarn add effector-next
    + import { createEvent, forward } from "effector-next"
    ```
 
-5. Configure what event will be triggered when the page is requested from the server using `withStart`
+5. Connect the `effector/babel-plugin`
+
+   <details>
+   <summary>.babelrc</summary>
+
+   ```json
+   {
+     "presets": ["next/babel"],
+     "plugins": ["effector/babel-plugin"]
+   }
+   ```
+
+   </details>
+
+6. Configure what event will be triggered when the page is requested from the server using `withStart`
 
    <details>
    <summary>pages/index.js</summary>
@@ -95,7 +109,7 @@ yarn add effector-next
        </div>
      );
    }
-   
+
    export default enhance(HomePage);
    ```
 
@@ -103,51 +117,100 @@ yarn add effector-next
 
 ### Example
 
-```jsx
-// models/index.js
-import { forward, createEvent, createStore, createEffect } from "effector-next";
+1. Declare our model
 
-export const pageLoaded = createEvent();
+   <details>
+   <summary>models/index.js</summary>
 
-const effect = createEffect({
-  handler() {
-    return Promise.resolve({ name: "someName" });
-  },
-});
+   ```jsx
+   import { forward, createEvent, createStore, createEffect } from "effector-next";
 
-export const $data = createStore(null);
+   export const pageLoaded = createEvent();
+   export const buttonClicked = createEvent();
 
-$data.on(effect.done, (_, { result }) => result);
+   const effect = createEffect({
+     handler(name) {
+       return Promise.resolve({ name });
+     },
+   });
 
-forward({
-  from: pageLoaded,
-  to: effect,
-});
-```
+   export const $data = createStore(null);
 
-```jsx
-// pages/index.jsx
-import React from "react";
-import { withStart } from "effector-next";
-import { useStore } from "effector-react";
+   $data.on(effect.done, (_, { result }) => result);
 
-import { $data, pageLoaded } from "../models";
+   forward({
+     from: pageLoaded.map(() => "nameFromPageLoaded"),
+     to: effect,
+   });
 
-const enhance = withStart(pageLoaded);
+   forward({
+     from: buttonClicked.map(() => "nameFromButtonClicked"),
+     to: effect,
+   });
+   ```
 
-function HomePage() {
-  const data = useStore($data);
+   </details>
 
-  return (
-    <div>
-      <h1>Data preloaded on the server:</h1>
-      {JSON.stringify(data)}
-    </div>
-  );
-}
+2. Connect the page to the store (all units must be wrapped in hooks - this is necessary in order to associate units with scope on the server)
 
-export default enhance(HomePage);
-```
+   <details>
+   <summary>pages/index.jsx</summary>
+
+   ```jsx
+   import React from "react";
+   import { useStore, useEvent } from "effector-react";
+
+   import { $data, buttonClicked } from "../models";
+
+   export default function HomePage() {
+     const data = useStore($data);
+     const handleClick = useEvent(buttonClicked);
+
+     return (
+       <div>
+         <h1>HomePage</h1>
+         <h2>Store state: {JSON.stringify({ data })}</h2>
+         <button onClick={handleClick}>click to change store state</button>
+       </div>
+     );
+   }
+   ```
+
+   </details>
+
+3. Bind an event that will be called on the server when the page is requested
+
+   <details>
+   <summary>pages/index.jsx</summary>
+
+   ```diff
+   import React from "react";
+   import { useStore, useEvent } from "effector-react";
+   +import { withStart } from "effector-next";
+
+   -import { $data, buttonClicked } from "../models";
+   +import { $data, pageLoaded, buttonClicked } from "../models";
+
+   +const enhance = withStart(pageLoaded);
+
+   -export default function HomePage() {
+   +function HomePage() {
+     const data = useStore($data);
+     const handleClick = useEvent(buttonClicked);
+
+     return (
+       <div>
+         <h1>HomePage</h1>
+         <h2>Store state: {JSON.stringify({ data })}</h2>
+         <button onClick={handleClick}>click to change store state</button>
+       </div>
+     );
+   }
+
+   +export default enhance(HomePage);
+   ```
+
+   </details>
 
 ## Configuration
 
@@ -157,7 +220,7 @@ The `withFork` accepts a config object as a parameter:
 
 ## Server payload
 
-When the unit passed to `assignStart` is called, the object will be passed as a payload:
+When the unit passed to `withStart` is called, the object will be passed as a payload:
 
 - `req` : incoming request
 - `res` : serever response
