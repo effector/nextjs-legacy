@@ -1,5 +1,4 @@
-import * as React from "react";
-import Document, { DocumentContext, DocumentProps } from "next/document";
+import NextDocument, { DocumentContext, DocumentProps } from "next/document";
 import { fork, serialize, allSettled } from "effector/fork";
 import cookies from "next-cookies";
 
@@ -9,7 +8,6 @@ import { getStartUnits, renderPageWithScope, INITIAL_STATE_KEY } from "./lib";
 
 /* eslint-disable no-console, complexity */
 
-type DocumentType = typeof Document;
 type NextData = DocumentProps["__NEXT_DATA__"];
 type InitialStateKey = typeof INITIAL_STATE_KEY;
 type InitialState = ReturnType<typeof serialize>;
@@ -25,13 +23,8 @@ export interface WithForkConfig {
 }
 
 export function withFork({ debug }: WithForkConfig = {}) {
-  return (Component: DocumentType): DocumentType =>
-    class WrappedDocument extends React.Component<WrappedDocumentProps> {
-      static renderDocument = Component.renderDocument;
-      static headTagsMiddleware = Component.headTagsMiddleware;
-      static bodyTagsMiddleware = Component.bodyTagsMiddleware;
-      static htmlPropsMiddleware = Component.htmlPropsMiddleware;
-
+  return (Document: typeof NextDocument) =>
+    class WithForkDocument extends Document {
       static async getInitialProps(ctx: DocumentContext) {
         const originalRenderPage = ctx.renderPage;
         const startUnits = getStartUnits(originalRenderPage);
@@ -67,7 +60,7 @@ export function withFork({ debug }: WithForkConfig = {}) {
 
         if (debug) console.time("3.Document.getInitialProps called");
 
-        const initialProps = await Component.getInitialProps(ctx);
+        const initialProps = await Document.getInitialProps(ctx);
 
         if (debug) console.timeEnd("3.Document.getInitialProps called");
 
@@ -85,10 +78,6 @@ export function withFork({ debug }: WithForkConfig = {}) {
         super(props);
 
         props.__NEXT_DATA__[INITIAL_STATE_KEY] = props.initialState;
-      }
-
-      render() {
-        return <Component {...this.props} />;
       }
     };
 }
