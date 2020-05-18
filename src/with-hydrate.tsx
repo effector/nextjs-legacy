@@ -1,3 +1,4 @@
+import * as React from "react";
 import NextApp, { AppProps } from "next/app";
 import { hydrate } from "effector/fork";
 
@@ -13,8 +14,11 @@ declare global {
 export function withHydrate() {
   const isServer = typeof window === "undefined";
 
-  return function (App: typeof NextApp) {
-    return class WithHydrateApp extends App {
+  return (App: typeof NextApp) =>
+    class WithHydrateApp extends React.Component<AppProps> {
+      static origGetInitialProps = App.origGetInitialProps;
+      static getInitialProps = App.getInitialProps;
+
       constructor(props: AppProps) {
         super(props);
 
@@ -22,6 +26,9 @@ export function withHydrate() {
 
         hydrate(domain, { values: window.__NEXT_DATA__[INITIAL_STATE_KEY] });
       }
+
+      render() {
+        return <App {...this.props} />;
+      }
     };
-  };
 }

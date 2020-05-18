@@ -1,14 +1,16 @@
-import { NextPage } from "next";
+import { NextPageContext, NextComponentType } from "next";
+import { AppContext } from "next/app";
 import { Unit } from "effector";
-import App from "next/app";
 
 import { PageContext } from "./types";
 import { START_UNIT_KEY } from "./lib";
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+type TargetComponentType<C> = NextComponentType<C, any, any>;
+
 export function withStart(unit: Unit<PageContext>) {
-  return (component: typeof App | NextPage<any>) => {
+  return (component: TargetComponentType<AppContext> | TargetComponentType<NextPageContext>) => {
     const originalGetInitialProps = component.getInitialProps;
 
     // We cancel static optimization for a component

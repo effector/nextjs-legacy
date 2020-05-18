@@ -1,3 +1,4 @@
+import * as React from "react";
 import NextDocument, { DocumentContext, DocumentProps } from "next/document";
 import { fork, serialize, allSettled } from "effector/fork";
 import cookies from "next-cookies";
@@ -24,7 +25,12 @@ export interface WithForkConfig {
 
 export function withFork({ debug }: WithForkConfig = {}) {
   return (Document: typeof NextDocument) =>
-    class WithForkDocument extends Document {
+    class WithForkDocument extends React.Component<WrappedDocumentProps> {
+      static renderDocument = Document.renderDocument;
+      static headTagsMiddleware = Document.headTagsMiddleware;
+      static bodyTagsMiddleware = Document.bodyTagsMiddleware;
+      static htmlPropsMiddleware = Document.htmlPropsMiddleware;
+
       static async getInitialProps(ctx: DocumentContext) {
         const originalRenderPage = ctx.renderPage;
         const startUnits = getStartUnits(originalRenderPage);
@@ -78,6 +84,10 @@ export function withFork({ debug }: WithForkConfig = {}) {
         super(props);
 
         props.__NEXT_DATA__[INITIAL_STATE_KEY] = props.initialState;
+      }
+
+      render() {
+        return <Document {...this.props} />;
       }
     };
 }
