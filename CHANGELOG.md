@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0-alpha.3](https://github.com/weyheyhey/effector-next/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2020-05-18)
+
+### Bug Fixes
+
+- remove invalid inheritance [#4](https://github.com/weyheyhey/effector-next/issues/4) ([8b9f411](https://github.com/weyheyhey/effector-next/commit/8b9f41102b8a52419d821fa11a4c5fc211b769c1))
+- **tools:** add support functional nextConfig [#3](https://github.com/weyheyhey/effector-next/issues/3) ([446d28e](https://github.com/weyheyhey/effector-next/commit/446d28eb7cd16761a349530c7435d3fbf0568599))
+
 ## [1.0.0-alpha.2](https://github.com/weyheyhey/effector-next/compare/v1.0.0-alpha.1...v1.0.0-alpha.2) (2020-05-18)
 
 ### Bug Fixes
