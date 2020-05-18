@@ -17,9 +17,11 @@ module.exports = function withEffectoReactAliases() {
     return originalResolveFilename.call(this, request, parentModule, isMain, options);
   };
 
-  return (nextConfig = {}) =>
-    // prevent https://github.com/zeit/next.js/blob/master/errors/empty-configuration
-    Object.assign({}, nextConfig, {
+  return (nextConfig = {}) => {
+    if (typeof nextConfig === "function") return nextConfig;
+
+    // prevent https://github.com/zeit/next.js/blob/master/errors/empty-configuration.md
+    return Object.assign({}, nextConfig, {
       webpack: (config, options) => {
         if (typeof nextConfig.webpack === "function") {
           return nextConfig.webpack(config, options);
@@ -28,4 +30,5 @@ module.exports = function withEffectoReactAliases() {
         return config;
       },
     });
+  };
 };
