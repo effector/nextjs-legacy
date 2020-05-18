@@ -17,5 +17,15 @@ module.exports = function withEffectoReactAliases() {
     return originalResolveFilename.call(this, request, parentModule, isMain, options);
   };
 
-  return (config) => config;
+  return (nextConfig = {}) =>
+    // prevent https://github.com/zeit/next.js/blob/master/errors/empty-configuration
+    Object.assign({}, nextConfig, {
+      webpack: (config, options) => {
+        if (typeof nextConfig.webpack === "function") {
+          return nextConfig.webpack(config, options);
+        }
+
+        return config;
+      },
+    });
 };
