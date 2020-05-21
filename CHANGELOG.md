@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/weyheyhey/effector-next/compare/v1.0.0-alpha.3...v1.0.0) (2020-05-21)
+
+### Features
+
+- refuse to replace aliases ([6e552b2](https://github.com/weyheyhey/effector-next/commit/6e552b20412f37f180f8863bb8b94cd33c28f616))
+- transfer start-unit declaration to initialProps ([f3a6135](https://github.com/weyheyhey/effector-next/commit/f3a6135cf259ca92c7572f3fbcedc984ba150b08))
+
 ## [1.0.0-alpha.3](https://github.com/weyheyhey/effector-next/compare/v1.0.0-alpha.2...v1.0.0-alpha.3) (2020-05-18)
 
 ### Bug Fixes

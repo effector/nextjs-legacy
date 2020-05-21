@@ -1,6 +1,6 @@
 {
   "name": "effector-next",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0",
   "sideEffects": false,
   "main": "dist/index.js",
   "module": "dist/index.es.js",
