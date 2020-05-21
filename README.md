@@ -2,6 +2,8 @@
 
 A HOCs that brings Effector and Next.js together
 
+[![npm version](https://badge.fury.io/js/effector-next.svg)](https://www.npmjs.com/package/effector-next)
+
 ## Installation
 
 ```bash
@@ -52,26 +54,18 @@ yarn add effector-next
 
    </details>
 
-3. To bind events/stores on the server to the scope, add aliases from `effector-react` to`effector-react/ssr` in `next.config.js`
-
-   <details>
-   <summary>next.config.js</summary>
-
-   ```js
-   const { withEffectoReactAliases } = require("effector-next/tools");
-
-   const enhance = withEffectoReactAliases();
-
-   module.exports = enhance({});
-   ```
-
-   </details>
-
-4. Replace import from `"effector"` to `"effector-next"`
+3. Replace imports from `"effector"` to `"effector-next"`
 
    ```diff
    - import { createEvent, forward } from "effector"
    + import { createEvent, forward } from "effector-next"
+   ```
+
+4. Replace imports from `"effector-react"` to `"effector-react/ssr"`
+
+   ```diff
+   - import { useEvent, useStore } from "effector-react"
+   + import { useEvent, useStore } from "effector-react/ssr"
    ```
 
 5. Connect the `effector/babel-plugin`
@@ -96,7 +90,7 @@ yarn add effector-next
    ```jsx
    import React from "react";
    import { withStart } from "effector-next";
-   import { useStore } from "effector-react";
+   import { useStore } from "effector-react/ssr";
 
    import { pageLoaded } from "../model";
 
@@ -158,7 +152,7 @@ yarn add effector-next
 
    ```jsx
    import React from "react";
-   import { useStore, useEvent } from "effector-react";
+   import { useStore, useEvent } from "effector-react/ssr";
 
    import { $data, buttonClicked } from "../models";
 
@@ -185,7 +179,7 @@ yarn add effector-next
 
    ```diff
    import React from "react";
-   import { useStore, useEvent } from "effector-react";
+   import { useStore, useEvent } from "effector-react/ssr";
    +import { withStart } from "effector-next";
 
    -import { $data, buttonClicked } from "../models";

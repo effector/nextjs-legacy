@@ -7,7 +7,6 @@
   "types": "dist/index.d.ts",
   "files": [
     "!example",
-    "tools",
     "dist"
   ],
   "scripts": {
