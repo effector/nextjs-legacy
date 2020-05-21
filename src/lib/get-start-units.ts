@@ -1,30 +1,28 @@
-import { DocumentContext } from "next/document";
-import { NextComponentType } from "next";
-import { Unit } from "effector";
+import { AppInitialProps } from "next/app";
+import { Unit, is } from "effector";
 
-import { PageContext } from "../types";
+import { AppType, Enhancer, RenderPage, PageContext } from "../types";
 
 import { START_UNIT_KEY } from "./constants";
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 type StartUnits = Array<Unit<PageContext>>;
-type RenderPage = DocumentContext["renderPage"];
-type Enhancer<C extends NextComponentType = NextComponentType<any, any, any>> = (Component: C) => C;
 
 export function getStartUnits(originalRenderPage: RenderPage) {
   const units: StartUnits = [];
 
   originalRenderPage({ enhanceApp: getStartUnit(units) });
-  originalRenderPage({ enhanceComponent: getStartUnit(units) });
 
-  return units;
+  return units.filter(is.unit);
 }
 
-function getStartUnit(units: StartUnits): Enhancer {
-  return (Component) => () => {
-    if (START_UNIT_KEY in Component) {
-      units.push(Component[START_UNIT_KEY]);
+function getStartUnit<P extends AppInitialProps>(units: StartUnits): Enhancer<AppType<P>> {
+  return () => (props) => {
+    if (START_UNIT_KEY in props) {
+      units.push(props[START_UNIT_KEY]);
+    }
+
+    if (START_UNIT_KEY in props.pageProps) {
+      units.push(props.pageProps[START_UNIT_KEY]);
     }
 
     return null;

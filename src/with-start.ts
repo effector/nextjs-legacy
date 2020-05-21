@@ -21,10 +21,8 @@ export function withStart(unit: Unit<PageContext>) {
         initialProps = await originalGetInitialProps(ctx);
       }
 
-      return initialProps;
+      return Object.assign({}, initialProps, { [START_UNIT_KEY]: unit });
     };
-
-    component[START_UNIT_KEY] = unit;
 
     return component;
   };

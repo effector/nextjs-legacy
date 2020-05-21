@@ -14,7 +14,7 @@ type InitialStateKey = typeof INITIAL_STATE_KEY;
 type InitialState = ReturnType<typeof serialize>;
 type ExtendedNextData = NextData & { [key in InitialStateKey]: InitialState };
 
-interface WrappedDocumentProps extends DocumentProps {
+interface CustomDocumentProps extends DocumentProps {
   initialState: InitialState;
   __NEXT_DATA__: ExtendedNextData;
 }
@@ -25,7 +25,7 @@ export interface WithForkConfig {
 
 export function withFork({ debug }: WithForkConfig = {}) {
   return (Document: typeof NextDocument) =>
-    class WithForkDocument extends React.Component<WrappedDocumentProps> {
+    class WithForkDocument extends React.Component<CustomDocumentProps> {
       static renderDocument = Document.renderDocument;
       static headTagsMiddleware = Document.headTagsMiddleware;
       static bodyTagsMiddleware = Document.bodyTagsMiddleware;
@@ -80,7 +80,7 @@ export function withFork({ debug }: WithForkConfig = {}) {
         };
       }
 
-      constructor(props: WrappedDocumentProps) {
+      constructor(props: CustomDocumentProps) {
         super(props);
 
         props.__NEXT_DATA__[INITIAL_STATE_KEY] = props.initialState;

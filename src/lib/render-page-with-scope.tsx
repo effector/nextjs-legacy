@@ -1,13 +1,9 @@
 import * as React from "react";
-import { AppContext, AppInitialProps } from "next/app";
-import { DocumentContext } from "next/document";
 import { Provider } from "effector-react/ssr";
-import { NextComponentType } from "next";
+import { AppInitialProps } from "next/app";
 import { Scope } from "effector/fork";
 
-type Enhancer<C> = (Component: C) => C;
-type RenderPage = DocumentContext["renderPage"];
-type AppType<P extends AppInitialProps> = NextComponentType<AppContext, AppInitialProps, P>;
+import { AppType, Enhancer, RenderPage } from "../types";
 
 export function renderPageWithScope(scope: Scope, originalRenderPage: RenderPage): RenderPage {
   return (params) => {
