@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "effector": "^20.15.0",
-    "effector-next": "1.0.0-alpha.3",
+    "effector-next": "^1.0.0",
     "effector-react": "^20.7.2",
     "next": "9.4.1",
     "react": "16.13.1",

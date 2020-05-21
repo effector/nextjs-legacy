@@ -1,5 +1,5 @@
 import React from "react";
-import { useStore, useEvent } from "effector-react";
+import { useStore, useEvent } from "effector-react/ssr";
 import { withStart } from "effector-next";
 import Link from "next/link";
 
