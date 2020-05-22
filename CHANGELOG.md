@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/weyheyhey/effector-next/compare/v1.0.0...v1.1.0) (2020-05-22)
+
+### Features
+
+- add lazy unit initialization ([01cbfda](https://github.com/weyheyhey/effector-next/commit/01cbfda1518431c684fd53664d1fe08c4858f4ee))
+
 ## [1.0.0](https://github.com/weyheyhey/effector-next/compare/v1.0.0-alpha.3...v1.0.0) (2020-05-21)
 
 ### Features
