@@ -54,18 +54,26 @@ yarn add effector-next
 
    </details>
 
-3. Replace imports from `"effector"` to `"effector-next"`
+3. To bind events/stores on the server to the scope, add aliases from `effector-react` to `effector-react/ssr` in `next.config.js`
+
+   <details>
+   <summary>next.config.js</summary>
+
+   ```js
+   const { withEffectoReactAliases } = require("effector-next/tools");
+
+   const enhance = withEffectoReactAliases();
+
+   module.exports = enhance({});
+   ```
+
+   </details>
+
+4. Replace imports from `"effector"` to `"effector-next"`
 
    ```diff
    - import { createEvent, forward } from "effector"
    + import { createEvent, forward } from "effector-next"
-   ```
-
-4. Replace imports from `"effector-react"` to `"effector-react/ssr"`
-
-   ```diff
-   - import { useEvent, useStore } from "effector-react"
-   + import { useEvent, useStore } from "effector-react/ssr"
    ```
 
 5. Connect the `effector/babel-plugin`
@@ -90,7 +98,7 @@ yarn add effector-next
    ```jsx
    import React from "react";
    import { withStart } from "effector-next";
-   import { useStore } from "effector-react/ssr";
+   import { useStore } from "effector-react";
 
    import { pageLoaded } from "../model";
 
@@ -152,7 +160,7 @@ yarn add effector-next
 
    ```jsx
    import React from "react";
-   import { useStore, useEvent } from "effector-react/ssr";
+   import { useStore, useEvent } from "effector-react";
 
    import { $data, buttonClicked } from "../models";
 
@@ -179,7 +187,7 @@ yarn add effector-next
 
    ```diff
    import React from "react";
-   import { useStore, useEvent } from "effector-react/ssr";
+   import { useStore, useEvent } from "effector-react";
    +import { withStart } from "effector-next";
 
    -import { $data, buttonClicked } from "../models";
