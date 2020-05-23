@@ -4,8 +4,8 @@ export const pageLoaded = createEvent();
 export const buttonClicked = createEvent();
 
 const effect = createEffect({
-  handler(name) {
-    return Promise.resolve({ name });
+  handler(value) {
+    return Promise.resolve({ value });
   },
 });
 
@@ -14,11 +14,11 @@ export const $data = createStore(null);
 $data.on(effect.done, (_, { result }) => result);
 
 forward({
-  from: pageLoaded.map(() => "name-from-pageLoaded"),
+  from: pageLoaded.map(() => "value-from-server"),
   to: effect,
 });
 
 forward({
-  from: buttonClicked.map(() => "name-from-buttonClicked"),
+  from: buttonClicked.map(() => "value-from-client"),
   to: effect,
 });

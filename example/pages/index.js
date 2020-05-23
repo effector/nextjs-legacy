@@ -1,5 +1,5 @@
 import React from "react";
-import { useStore, useEvent } from "effector-react/ssr";
+import { useStore, useEvent } from "effector-react";
 import { withStart } from "effector-next";
 import Link from "next/link";
 
@@ -14,7 +14,7 @@ function HomePage() {
   return (
     <div>
       <h1>Server Page</h1>
-      <h2>Store state: {JSON.stringify({ data })}</h2>
+      <h2>Store state: {JSON.stringify(data)}</h2>
       <button onClick={handleClick}>click to change store state</button>
       <br />
       <br />
