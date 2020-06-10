@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/weyheyhey/effector-next/compare/v1.1.0...v1.2.0) (2020-06-10)
+
+### Features
+
+- **with-fork:** add the ability to exclude stores from serialization ([8adef26](https://github.com/weyheyhey/effector-next/commit/8adef26c71894b75ee7f7152afe83726984e2095))
+
 ## [1.1.0](https://github.com/weyheyhey/effector-next/compare/v1.0.0...v1.1.0) (2020-05-22)
 
 ### Features
