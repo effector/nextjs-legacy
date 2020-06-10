@@ -219,6 +219,7 @@ yarn add effector-next
 The `withFork` accepts a config object as a parameter:
 
 - `debug` (optional, boolean) : enable debug logging
+- `serializeIgnore` (optional, array) : stores whose values ​​should not be sent to the client after serialization
 
 ## Server payload
 

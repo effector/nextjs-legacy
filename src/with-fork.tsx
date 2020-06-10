@@ -2,6 +2,7 @@ import * as React from "react";
 import NextDocument, { DocumentContext, DocumentProps } from "next/document";
 import { fork, serialize, allSettled } from "effector/fork";
 import cookies from "next-cookies";
+import { Store } from "effector";
 
 import { domain } from "./domain";
 import { PageContext } from "./types";
@@ -21,9 +22,10 @@ interface CustomDocumentProps extends DocumentProps {
 
 export interface WithForkConfig {
   debug?: boolean;
+  serializeIgnore?: Array<Store<unknown>>;
 }
 
-export function withFork({ debug }: WithForkConfig = {}) {
+export function withFork({ debug, serializeIgnore }: WithForkConfig = {}) {
   return (Document: typeof NextDocument) =>
     class WithForkDocument extends React.Component<CustomDocumentProps> {
       static renderDocument = Document.renderDocument;
@@ -70,7 +72,7 @@ export function withFork({ debug }: WithForkConfig = {}) {
 
         if (debug) console.timeEnd("3.Document.getInitialProps called");
 
-        const initialState = serialize(scope);
+        const initialState = serialize(scope, { ignore: serializeIgnore });
 
         if (debug) console.log("4.Received initial state:", initialState);
 
