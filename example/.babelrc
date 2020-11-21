@@ -1,4 +1,6 @@
 {
   "presets": ["next/babel"],
-  "plugins": ["effector/babel-plugin"]
+  "plugins": [
+    ["effector/babel-plugin", { "importName": ["effector-next"] }]
+  ]
 }
