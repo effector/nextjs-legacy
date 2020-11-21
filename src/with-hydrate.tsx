@@ -7,6 +7,7 @@ import { INITIAL_STATE_KEY } from "./lib";
 
 declare global {
   interface Window {
+    // @ts-ignore
     __NEXT_DATA__: Object;
   }
 }

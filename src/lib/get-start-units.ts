@@ -21,6 +21,7 @@ function getStartUnit<P extends AppInitialProps>(units: StartUnits): Enhancer<Ap
       units.push(props[START_UNIT_KEY]);
     }
 
+    // eslint-disable-next-line react/destructuring-assignment
     if (START_UNIT_KEY in props.pageProps) {
       units.push(props.pageProps[START_UNIT_KEY]);
     }
