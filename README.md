@@ -88,6 +88,15 @@ yarn add effector-next
    }
    ```
 
+   If you are using `effector` version > 21.3.0, you also need to configure the babel plugin:
+
+   ```json
+   {
+     "presets": ["next/babel"],
+     "plugins": ["effector/babel-plugin", { "importName": ["effector-next"] }]
+   }
+   ```
+
    </details>
 
 6. Configure what event will be triggered when the page is requested from the server using `withStart`
