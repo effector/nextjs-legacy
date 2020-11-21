@@ -37,10 +37,10 @@
     "next-cookies": "^2.0.3"
   },
   "peerDependencies": {
-    "effector": "^20.13.5",
-    "effector-react": "^20.6.0",
-    "next": "^9.0.0",
-    "react": "^16.0.0"
+    "effector": ">=20.13.5",
+    "effector-react": ">=20.6.0",
+    "next": ">=9.0.0",
+    "react": ">=16.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.13.15",
