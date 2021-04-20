@@ -1,13 +1,9 @@
-import { NextPageContext, NextComponentType } from "next";
+import { NextPageContext } from "next";
 import { AppContext } from "next/app";
 import { Unit } from "effector";
 
-import { PageContext } from "./types";
 import { START_UNIT_KEY } from "./lib";
-
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
-type TargetComponentType<C> = NextComponentType<C, any, any>;
+import { PageContext, TargetComponentType } from "./types";
 
 export function withStart(unit: Unit<PageContext>) {
   return (component: TargetComponentType<AppContext> | TargetComponentType<NextPageContext>) => {
@@ -17,7 +13,7 @@ export function withStart(unit: Unit<PageContext>) {
     component.getInitialProps = async (ctx: any) => {
       let initialProps = {};
 
-      if (originalGetInitialProps) {
+      if (typeof originalGetInitialProps === "function") {
         initialProps = await originalGetInitialProps(ctx);
       }
 

@@ -22,7 +22,7 @@ interface CustomDocumentProps extends DocumentProps {
 
 export interface WithForkConfig {
   debug?: boolean;
-  serializeIgnore?: Array<Store<unknown>>;
+  serializeIgnore?: Array<Store<any>>;
 }
 
 export function withFork({ debug, serializeIgnore }: WithForkConfig = {}) {

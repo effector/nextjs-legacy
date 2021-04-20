@@ -1,7 +1,6 @@
-import { AppInitialProps } from "next/app";
-import { Unit, is } from "effector";
+import { is, Unit } from "effector";
 
-import { AppType, Enhancer, RenderPage, PageContext } from "../types";
+import { AppType, AppProps, Enhancer, RenderPage, PageContext } from "../types";
 
 import { START_UNIT_KEY } from "./constants";
 
@@ -15,14 +14,13 @@ export function getStartUnits(originalRenderPage: RenderPage) {
   return units.filter(is.unit);
 }
 
-function getStartUnit<P extends AppInitialProps>(units: StartUnits): Enhancer<AppType<P>> {
+function getStartUnit<P extends AppProps>(units: StartUnits): Enhancer<AppType<P>> {
   return () => (props) => {
-    if (START_UNIT_KEY in props) {
+    if (props?.[START_UNIT_KEY]) {
       units.push(props[START_UNIT_KEY]);
     }
 
-    // eslint-disable-next-line react/destructuring-assignment
-    if (START_UNIT_KEY in props.pageProps) {
+    if (props?.pageProps?.[START_UNIT_KEY]) {
       units.push(props.pageProps[START_UNIT_KEY]);
     }
 

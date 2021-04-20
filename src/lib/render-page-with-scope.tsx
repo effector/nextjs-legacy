@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Provider } from "effector-react/ssr";
-import { AppInitialProps } from "next/app";
 import { Scope } from "effector/fork";
 
-import { AppType, Enhancer, RenderPage } from "../types";
+import { AppType, AppProps, Enhancer, RenderPage } from "../types";
 
 export function renderPageWithScope(scope: Scope, originalRenderPage: RenderPage): RenderPage {
   return (params) => {
@@ -20,10 +19,7 @@ export function renderPageWithScope(scope: Scope, originalRenderPage: RenderPage
   };
 }
 
-function createEnhanceApp<P extends AppInitialProps>(
-  scope: Scope,
-  enhancer?: Enhancer<AppType<P>>,
-): Enhancer<AppType<P>> {
+function createEnhanceApp<P extends AppProps>(scope: Scope, enhancer?: Enhancer<AppType<P>>): Enhancer<AppType<P>> {
   return (Component) => (props) => {
     const App = enhancer ? enhancer(Component) : Component;
 

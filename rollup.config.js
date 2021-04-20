@@ -22,7 +22,6 @@ export default {
       sourcemap: true,
       exports: "named",
       file: pkg.main,
-      interop: false,
       externalLiveBindings: false,
     },
   ],
@@ -38,6 +37,7 @@ export default {
     commonjs({ extensions }),
   ],
   external: [
+    "next/app",
     "effector/fork",
     "effector-react/ssr",
     ...Object.keys(Object.assign({}, pkg.dependencies, pkg.peerDependencies)),
