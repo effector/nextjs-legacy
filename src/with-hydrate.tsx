@@ -13,7 +13,7 @@ declare global {
   }
 }
 
-type HydratedApp = TargetComponentType<AppContext> & { origGetInitialProps?: never };
+type HydratedApp = TargetComponentType<AppContext> & { origGetInitialProps?: any };
 
 export function withHydrate() {
   const isServer = typeof window === "undefined";
