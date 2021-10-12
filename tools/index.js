@@ -1,5 +1,6 @@
-const withEffectoReactAliases = require("./with-effector-react-aliases");
+const withEffectorReactAliases = require("./with-effector-react-aliases");
 
 module.exports = {
-  withEffectoReactAliases,
+  withEffectorReactAliases,
+  withEffectoReactAliases: withEffectorReactAliases,
 };

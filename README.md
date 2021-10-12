@@ -60,9 +60,9 @@ yarn add effector-next
    <summary>next.config.js</summary>
 
    ```js
-   const { withEffectoReactAliases } = require("effector-next/tools");
+   const { withEffectorReactAliases } = require("effector-next/tools");
 
-   const enhance = withEffectoReactAliases();
+   const enhance = withEffectorReactAliases();
 
    module.exports = enhance({});
    ```
@@ -239,3 +239,11 @@ When the unit passed to `withStart` is called, the object will be passed as a pa
 - `cookies` : parsed cookies
 - `pathname` : path section of `URL`
 - `query` : query string section of `URL` parsed as an object.
+
+## Release process
+
+1. Check out the [draft release](https://github.com/effector/nextjs/releases).
+1. All PRs should have correct labels and useful titles. You can [review available labels here](https://github.com/effector/nextjs/blob/master/.github/release-drafter.yml).
+1. Update labels for PRs and titles, next [manually run the release drafter action](https://github.com/effector/nextjs/actions/workflows/release-drafter.yml) to regenerate the draft release.
+1. Review the new version and press "Publish"
+1. If required check "Create discussion for this release"
