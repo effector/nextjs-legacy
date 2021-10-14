@@ -38,7 +38,6 @@ export default {
   ],
   external: [
     "next/app",
-    "effector/fork",
     "effector-react/ssr",
     ...Object.keys(Object.assign({}, pkg.dependencies, pkg.peerDependencies)),
   ],

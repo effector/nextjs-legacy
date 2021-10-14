@@ -1,8 +1,7 @@
 import * as React from "react";
 import NextDocument, { DocumentContext, DocumentProps } from "next/document";
-import { fork, serialize, allSettled } from "effector/fork";
+import { fork, serialize, allSettled, Store } from "effector";
 import cookies from "next-cookies";
-import { Store } from "effector";
 
 import { domain } from "./domain";
 import { PageContext } from "./types";
