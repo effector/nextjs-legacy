@@ -1,6 +1,6 @@
 import * as React from "react";
 import NextApp, { AppContext, AppProps } from "next/app";
-import { hydrate } from "effector/fork";
+import { hydrate } from "effector";
 
 import { domain } from "./domain";
 import { INITIAL_STATE_KEY } from "./lib";

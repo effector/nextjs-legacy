@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Provider } from "effector-react/ssr";
-import { Scope } from "effector/fork";
+import { Scope } from "effector";
 
 import { AppType, AppProps, Enhancer, RenderPage } from "../types";
 
