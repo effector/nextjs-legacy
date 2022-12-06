@@ -1,5 +1,7 @@
 # Effector Next
 
+> Note: we recommend using [nextjs-effector](https://github.com/risenforces/nextjs-effector) package.
+
 A HOCs that brings Effector and Next.js together
 
 [![npm version](https://badge.fury.io/js/effector-next.svg)](https://www.npmjs.com/package/effector-next)
