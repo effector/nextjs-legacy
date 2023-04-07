@@ -1,6 +1,6 @@
 # Effector Next
 
-> Note: we recommend using [nextjs-effector](https://github.com/risenforces/nextjs-effector) package.
+> Note: we recommend using [`@effector/next`](https://github.com/effector/next) package.
 
 A HOCs that brings Effector and Next.js together
 
